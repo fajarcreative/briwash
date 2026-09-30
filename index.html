@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Template landing page laundry express yang mudah dikustom." />
+  <title>Briwash Cihampelas — Demo</title>
+  <style>
+    /*
+      ======================================================================
+      CONFIG CSS — Ganti warna utama di sini jika tidak ingin memakai JS.
+      Semua gambar memakai URL Unsplash sebagai placeholder. Ganti URL-nya
+      pada objek CONFIG di akhir file dengan gambar bisnis Anda sendiri.
+      ======================================================================
+    */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --primary: #5f7ff5;
+      --primary-dark: #405fd0;
+      --navy: #263b62;
+      --ink: #314565;
+      --muted: #7587a5;
+      --pale: #f1f5ff;
+      --pale-blue: #eaf0ff;
+      --line: #dce6fb;
+      --white: #ffffff;
+      --success: #29bb70;
+      --shadow: 0 16px 34px rgba(55, 86, 148, .12);
+      --shadow-soft: 0 8px 24px rgba(55, 86, 148, .08);
+      --radius: 22px;
+      --container: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: "Poppins", "Inter", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(calc(100% - 40px), var(--container)); margin: 0 auto; }
+    .section { padding: 104px 0; }
+    .section-tint { background: var(--pale); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 22px; height: 3px; border-radius: 10px; background: currentColor; }
+    .section-heading { max-width: 700px; margin: 0 auto 50px; text-align: center; }
+    .section-heading h2 { margin: 12px 0 13px; color: var(--navy); font-size: clamp(28px, 3.2vw, 40px); line-height: 1.23; letter-spacing: -.04em; }
+    .section-heading p { margin: 0; color: var(--muted); }
+    .title-rule { width: 78px; height: 5px; margin: 0 auto; border-radius: 100px; background: var(--primary); }
+    .pill { display: inline-flex; align-items: center; justify-content: center; min-height: 28px; padding: 4px 12px; border-radius: 999px; color: var(--primary-dark); background: var(--pale-blue); font-size: 11px; font-weight: 700; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 25px; border: 1px solid transparent; border-radius: 999px; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; font-weight: 700; white-space: nowrap; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(56, 87, 182, .22); }
+    .btn-primary { color: #fff; background: var(--primary); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-ghost { color: var(--primary); border-color: #cfe0ff; background: #fff; }
+    .btn-ghost:hover { background: var(--pale); }
+    .icon { width: 21px; height: 21px; fill: currentColor; flex: 0 0 auto; }
+
+    /* Header */
+    .site-header { position: sticky; z-index: 30; top: 0; background: rgba(255,255,255,.94); border-bottom: 1px solid rgba(224,232,247,.75); backdrop-filter: blur(14px); }
+    .nav-wrap { display: flex; align-items: center; min-height: 86px; gap: 34px; }
+    .brand { display: inline-flex; align-items: center; color: var(--primary); line-height: 1; }
+    .brand-main { display: block; font-size: 31px; font-weight: 700; letter-spacing: -.08em; }
+    .brand-main span { color: var(--navy); }
+    .brand-sub { display: block; width: max-content; margin-top: 3px; padding: 3px 8px 2px; border-radius: 3px; color: #fff; background: var(--primary); font-size: 8px; font-weight: 700; letter-spacing: .2em; }
+    .desktop-nav { display: flex; align-items: center; gap: 33px; margin-left: auto; color: var(--navy); font-weight: 600; }
+    .desktop-nav a { position: relative; }
+    .desktop-nav a:not(.nav-terms)::after { position: absolute; right: 0; bottom: -10px; left: 0; height: 2px; border-radius: 4px; background: var(--primary); content: ""; transform: scaleX(0); transform-origin: right; transition: transform .2s ease; }
+    .desktop-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+    .nav-terms { margin-left: 20px; padding: 10px 19px; border: 1px solid #cfe0ff; border-radius: 999px; color: var(--primary); font-size: 13px; }
+    .menu-toggle { display: none; align-items: center; justify-content: center; width: 43px; height: 43px; margin-left: auto; border: 0; border-radius: 12px; color: var(--navy); background: var(--pale); }
+    .menu-toggle svg { width: 24px; height: 24px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .mobile-nav { display: none; padding: 0 20px 20px; }
+    .mobile-nav.open { display: grid; gap: 4px; }
+    .mobile-nav a { padding: 11px 12px; border-radius: 10px; color: var(--navy); font-weight: 600; }
+    .mobile-nav a:hover { background: var(--pale); color: var(--primary); }
+
+    /* Hero */
+    .hero { position: relative; isolation: isolate; min-height: min(720px, calc(100svh - 86px)); color: #fff; background: #334a77; }
+    .hero::before { position: absolute; z-index: -2; inset: 0; background: var(--hero-image) center/cover no-repeat; content: ""; }
+    .hero::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(20,41,80,.9) 0%, rgba(28,52,99,.7) 41%, rgba(42,67,105,.22) 100%); content: ""; }
+    .hero-inner { display: flex; align-items: center; min-height: inherit; padding: 95px 0 92px; }
+    .hero-copy { max-width: 720px; }
+    .hero .eyebrow { color: #c8d6ff; }
+    .hero h1 { max-width: 760px; margin: 17px 0 18px; font-size: clamp(38px, 5.2vw, 68px); line-height: 1.12; letter-spacing: -.055em; }
+    .hero h1 em { color: #afc2ff; font-style: normal; }
+    .hero p { max-width: 600px; margin: 0; color: #e7eeff; font-size: clamp(15px, 1.5vw, 18px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+    .hero .btn-ghost { border-color: rgba(255,255,255,.5); color: #fff; background: rgba(255,255,255,.08); }
+    .hero .btn-ghost:hover { background: rgba(255,255,255,.18); }
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 25px; margin-top: 42px; }
+    .hero-trust div { display: flex; align-items: center; gap: 9px; color: #edf2ff; font-size: 13px; }
+    .hero-trust b { color: #fff; }
+    .check { display: inline-grid; place-items: center; width: 21px; height: 21px; border-radius: 50%; background: rgba(150,179,255,.3); color: #fff; }
+    .check svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 3; fill: none; }
+    .hero-card { position: absolute; right: max(20px, calc((100vw - var(--container))/2)); bottom: 39px; display: flex; align-items: center; gap: 14px; padding: 15px 18px; border: 1px solid rgba(255,255,255,.27); border-radius: 18px; background: rgba(255,255,255,.16); box-shadow: 0 12px 28px rgba(13,28,58,.2); backdrop-filter: blur(10px); }
+    .hero-card-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #fff; color: var(--primary); }
+    .hero-card b { display: block; font-size: 14px; }
+    .hero-card small { color: #e6edff; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: minmax(0, .96fr) minmax(0, 1fr); align-items: center; gap: clamp(42px, 7vw, 112px); }
+    .about-photo { position: relative; min-height: 470px; }
+    .about-photo img { width: calc(100% - 38px); height: 465px; border-radius: 26px; object-fit: cover; box-shadow: var(--shadow); }
+    .employee-tag { position: absolute; bottom: 35px; left: 18px; display: inline-flex; align-items: center; gap: 9px; max-width: calc(100% - 170px); padding: 10px 13px; border: 1px solid rgba(255,255,255,.35); border-radius: 14px; color: #fff; background: rgba(28,48,87,.7); box-shadow: 0 8px 20px rgba(21,38,71,.2); backdrop-filter: blur(9px); }
+    .employee-tag::before { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: var(--primary-dark); background: #fff; content: "✦"; font-size: 14px; }
+    .employee-tag strong, .employee-tag small { display: block; line-height: 1.25; }
+    .employee-tag strong { font-size: 11px; }
+    .employee-tag small { margin-top: 2px; color: #dce7ff; font-size: 9px; }
+    .about-stamp { position: absolute; right: 0; bottom: 28px; display: grid; place-items: center; width: 132px; aspect-ratio: 1; padding: 12px; border: 10px solid #fff; border-radius: 50%; color: #fff; background: var(--primary); box-shadow: var(--shadow); text-align: center; }
+    .about-stamp > div { display: grid; width: 100%; place-items: center; gap: 6px; }
+    .about-stamp strong { display: block; width: 100%; margin: 0; font-size: 34px; line-height: 1; letter-spacing: -.05em; white-space: nowrap; }
+    .about-stamp span { display: block; width: 100%; margin: 0; font-size: 10px; font-weight: 600; line-height: 1.25; }
+    .about-content h2 { margin: 10px 0 17px; color: var(--navy); font-size: clamp(28px, 3.2vw, 40px); line-height: 1.25; letter-spacing: -.04em; }
+    .about-content > p { margin: 0; color: var(--muted); }
+    .feature-list { display: grid; gap: 15px; margin: 26px 0 30px; }
+    .feature-row { display: flex; align-items: center; gap: 15px; min-width: 0; }
+    .feature-row > span:last-child { min-width: 0; flex: 1; }
+    .feature-icon { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 13px; color: var(--primary); background: var(--pale-blue); }
+    .feature-icon .icon { width: 20px; }
+    .feature-row strong { display: block; color: var(--navy); font-size: 14px; overflow-wrap: anywhere; }
+    .feature-row span { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
+    /* Keep the icon centered: the text rule above must not override this grid. */
+    .feature-row .feature-icon { display: grid; place-items: center; flex: 0 0 43px; color: var(--primary); font-size: initial; line-height: 1; overflow-wrap: normal; }
+    .feature-row .feature-icon .icon { display: block; }
+
+    /* Why choose us */
+    .reasons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .reason-card { position: relative; overflow: hidden; padding: 35px 30px 31px; border: 1px solid transparent; border-radius: var(--radius); background: #fff; box-shadow: var(--shadow-soft); transition: transform .2s ease, border-color .2s ease; }
+    .reason-card:hover { border-color: #d7e4ff; transform: translateY(-5px); }
+    .round-icon { display: grid; place-items: center; width: 66px; height: 66px; margin-bottom: 22px; border-radius: 50%; color: var(--primary); background: var(--pale-blue); }
+    .round-icon .icon { width: 29px; height: 29px; }
+    .reason-card .round-icon { position: relative; width: 72px; height: 72px; overflow: hidden; border: 1px solid #d7e3ff; background: linear-gradient(145deg, #f4f7ff, #dfe9ff); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 10px 20px rgba(83,112,201,.12); }
+    .reason-card .round-icon::before { position: absolute; width: 57px; height: 57px; border: 1px dashed rgba(95,127,245,.38); border-radius: 50%; content: ""; }
+    .reason-card .round-icon .icon { position: relative; z-index: 1; width: 34px; height: 34px; }
+    .reason-card:nth-child(2) .round-icon { color: #7861de; border-color: #e1d8ff; background: linear-gradient(145deg, #faf7ff, #e9e2ff); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 10px 20px rgba(111,89,207,.11); }
+    .reason-card:nth-child(2) .round-icon::before { border-color: rgba(120,97,222,.32); }
+    .reason-card:nth-child(3) .round-icon { color: #2c9fc7; border-color: #d5edf7; background: linear-gradient(145deg, #f1fcff, #d9f2fa); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 10px 20px rgba(48,151,190,.11); }
+    .reason-card:nth-child(3) .round-icon::before { border-color: rgba(44,159,199,.32); }
+    .reason-card h3 { margin: 0 0 9px; color: var(--navy); font-size: 18px; }
+    .reason-card p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    /* Services */
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+    .service-card { position: relative; display: flex; min-height: 235px; align-items: flex-start; justify-content: flex-end; overflow: hidden; flex-direction: column; gap: 12px; padding: 23px; border: 1px solid #d9e5fb; border-radius: 20px; background: #6078bd; box-shadow: 0 4px 0 rgba(99,127,194,.03); text-align: left; transition: .2s ease; isolation: isolate; }
+    .service-card::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(22,40,73,.06) 14%, rgba(23,43,79,.82) 100%); content: ""; }
+    .service-card:hover { transform: translateY(-4px); border-color: #cedeff; box-shadow: var(--shadow-soft); }
+    .service-card:hover .service-photo { transform: scale(1.06); }
+    .service-photo { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .service-content { position: relative; z-index: 1; }
+    .service-mini-icon { display: grid; place-items: center; width: 36px; height: 36px; margin-bottom: 8px; border: 1px solid rgba(255,255,255,.45); border-radius: 11px; color: #fff; background: rgba(255,255,255,.18); backdrop-filter: blur(5px); }
+    .service-mini-icon .icon { width: 18px; height: 18px; }
+    .service-card .round-icon { width: 64px; height: 64px; margin: 0; }
+    .service-card h3 { margin: 0; color: #fff; font-size: 18px; line-height: 1.3; text-shadow: 0 2px 7px rgba(13,26,52,.2); }
+
+    /* Price list */
+    .pricing-box { overflow: hidden; border: 1px solid #d4e1fb; border-top: 5px solid var(--primary); border-radius: 23px; background: #fff; box-shadow: var(--shadow); }
+    .price-tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+    .price-tab { min-height: 65px; padding: 12px; border: 0; border-right: 1px solid transparent; color: var(--muted); background: #fff; font-weight: 600; transition: .2s ease; }
+    .price-tab:hover { color: var(--primary); background: #f8faff; }
+    .price-tab.active { color: var(--primary); background: var(--pale); box-shadow: inset 0 -3px 0 var(--primary); }
+    .time-panel { padding: 23px 30px; border-bottom: 1px solid var(--line); text-align: center; }
+    .time-caption { display: block; margin-bottom: 12px; color: #8898b2; font-size: 11px; font-weight: 700; letter-spacing: .11em; }
+    .time-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .time-tab { min-height: 39px; padding: 0 20px; border: 1px solid #cfe0ff; border-radius: 999px; color: var(--muted); background: #fff; font-size: 12px; font-weight: 600; }
+    .time-tab.active { border-color: var(--primary); color: #fff; background: var(--primary); box-shadow: 0 6px 12px rgba(95,127,245,.22); }
+    .price-list { margin: 0; padding: 0; list-style: none; }
+    .price-row { display: flex; justify-content: space-between; gap: 22px; padding: 18px 30px; border-bottom: 1px solid #edf2fb; color: var(--ink); font-size: 14px; }
+    .price-row:last-child { border-bottom: 0; }
+    .price-row strong { color: var(--navy); white-space: nowrap; }
+    .price-note { padding: 15px 30px; color: #8c9bb4; background: #fbfcff; font-size: 11px; font-style: italic; }
+    .price-cta { margin-top: 37px; text-align: center; }
+
+    /* Express process */
+    .express-layout { display: grid; grid-template-columns: minmax(0, .98fr) minmax(0, 1fr); align-items: center; gap: 57px; }
+    .express-image { min-height: 515px; border-radius: 24px; background: var(--express-image) center/cover no-repeat; box-shadow: var(--shadow); }
+    .process-stack { display: grid; gap: 20px; }
+    .process-card { display: grid; grid-template-columns: 66px 1fr; gap: 19px; align-items: center; padding: 26px 27px; border: 1px solid #e5edfb; border-radius: 19px; background: #fff; box-shadow: 0 5px 0 rgba(99,127,194,.025); }
+    .process-card .round-icon { position: relative; width: 66px; height: 66px; margin: 0; overflow: hidden; border: 1px solid #d8e4ff; background: linear-gradient(145deg, #f2f6ff, #dbe6ff); box-shadow: inset 0 1px 0 rgba(255,255,255,.95), 0 8px 16px rgba(89,119,204,.1); }
+    .process-card .round-icon::before { position: absolute; width: 53px; height: 53px; border: 1px dashed rgba(95,127,245,.32); border-radius: 50%; content: ""; }
+    .process-card .round-icon .icon { position: relative; z-index: 1; width: 31px; height: 31px; }
+    .process-card:nth-child(2) .round-icon { color: #7d64e8; background: linear-gradient(145deg, #f5f0ff, #e6ddff); }
+    .process-card:nth-child(3) .round-icon { color: #3f9dca; background: linear-gradient(145deg, #effbff, #d7f0fa); }
+    .process-card h3 { margin: 0 0 5px; color: var(--navy); font-size: 18px; }
+    .process-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
+    /* Trust + gallery */
+    .trust-band { padding: 65px 0; color: #fff; background: var(--navy); }
+    .trust-band .section-heading { margin-bottom: 35px; }
+    .trust-band h2 { color: #fff; }
+    .trust-band .section-heading p { color: #cbd7f1; }
+    .trust-logos { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; align-items: stretch; }
+    .trust-logo { position: relative; display: flex; min-height: 150px; align-items: flex-end; overflow: hidden; padding: 14px; border: 1px solid rgba(255,255,255,.22); border-radius: 13px; color: #f5f7ff; background: rgba(255,255,255,.08); text-align: left; isolation: isolate; }
+    .trust-logo::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(180deg, rgba(16,32,63,.04) 20%, rgba(15,30,60,.86) 100%); content: ""; }
+    .trust-logo img { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .trust-logo:hover img { transform: scale(1.06); }
+    .trust-logo span { display: block; font-size: 14px; font-weight: 700; line-height: 1.25; text-shadow: 0 1px 5px rgba(5,13,30,.45); }
+    .trust-logo small { display: block; margin-top: 3px; color: #d2def8; font-size: 8px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .gallery-section { padding-top: 84px; padding-bottom: 84px; }
+    .gallery-section .section-heading { margin-bottom: 34px; }
+    .gallery { display: grid; grid-template-columns: 1.08fr 1fr 1fr 1.08fr; grid-template-rows: repeat(2, clamp(170px, 15vw, 210px)); gap: 12px; }
+    .gallery-item { position: relative; min-width: 0; margin: 0; overflow: hidden; border-radius: 18px; background: #dbe4fa; box-shadow: 0 8px 20px rgba(55,86,148,.08); }
+    .gallery-item:nth-child(1), .gallery-item:nth-child(4) { grid-row: span 2; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-item::after { position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(16,31,60,.64)); content: ""; pointer-events: none; }
+    .gallery-item span { position: absolute; z-index: 1; bottom: 11px; left: 11px; max-width: calc(100% - 22px); padding: 5px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; color: #fff; background: rgba(19,35,66,.58); backdrop-filter: blur(6px); font-size: 10px; font-weight: 600; line-height: 1.4; }
+
+    /* Testimonial */
+    .testimonial-rail { display: flex; gap: 22px; overflow-x: auto; padding: 3px 2px 15px; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: var(--primary) transparent; }
+    .testimonial { min-width: min(100%, 382px); scroll-snap-align: start; padding: 28px; border: 1px solid #e1eafa; border-radius: 20px; background: #fff; box-shadow: var(--shadow-soft); }
+    .stars { color: #ffb433; letter-spacing: .1em; font-size: 14px; }
+    .testimonial blockquote { margin: 16px 0 23px; color: var(--ink); font-size: 13px; line-height: 1.75; }
+    .reviewer { display: flex; align-items: center; gap: 12px; }
+    .avatar { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; color: var(--primary-dark); background: var(--pale-blue); font-size: 13px; font-weight: 800; }
+    .reviewer strong, .reviewer small { display: block; }
+    .reviewer strong { color: var(--navy); font-size: 13px; }
+    .reviewer small { color: var(--muted); font-size: 10px; }
+
+    /* Form */
+    .pickup-wrap { display: grid; grid-template-columns: .83fr 1.17fr; overflow: hidden; border-radius: 28px; background: #fff; box-shadow: var(--shadow); }
+    .pickup-aside { position: relative; min-height: 100%; padding: 50px 46px; color: #fff; background: linear-gradient(160deg, var(--primary), #819bf5); }
+    .pickup-aside::after { position: absolute; right: -90px; bottom: -130px; width: 300px; height: 300px; border: 55px solid rgba(255,255,255,.12); border-radius: 50%; content: ""; }
+    .pickup-aside h2 { position: relative; z-index: 1; margin: 12px 0 14px; font-size: 31px; line-height: 1.25; letter-spacing: -.04em; }
+    .pickup-aside p { position: relative; z-index: 1; margin: 0; color: #ebefff; font-size: 13px; }
+    .pickup-points { position: relative; z-index: 1; display: grid; gap: 21px; margin: 35px 0 0; }
+    .pickup-point { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: center; gap: 14px; }
+    .pickup-point > .check { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; color: #fff; background: linear-gradient(145deg, rgba(255,255,255,.34), rgba(255,255,255,.14)); box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 7px 16px rgba(35,58,140,.14); line-height: 0; }
+    .pickup-point > .check svg { display: block; width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2.7; stroke-linecap: round; stroke-linejoin: round; }
+    .pickup-point > span:not(.check) { display: block; min-width: 0; }
+    .pickup-point > span:not(.check) > b { display: block; font-size: 13px; }
+    .pickup-point > span:not(.check) > span { display: block; color: #e8eeff; font-size: 11px; line-height: 1.5; }
+    .pickup-form { padding: 47px 46px; }
+    .pickup-form h3 { margin: 0 0 22px; color: var(--navy); font-size: 23px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: var(--navy); font-size: 11px; font-weight: 700; }
+    .field input, .field select, .field textarea { width: 100%; min-height: 47px; padding: 11px 13px; border: 1px solid #dce7fa; border-radius: 10px; outline: none; color: var(--ink); background: #fff; font-size: 12px; transition: border .2s, box-shadow .2s; }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(95,127,245,.11); }
+    .form-foot { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-top: 21px; }
+    .form-foot small { color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    /* Partner strip + footer */
+    .partner-strip { padding: 45px 0; overflow: hidden; border-bottom: 1px solid var(--line); background: #fff; }
+    .partner-strip-inner { display: grid; grid-template-columns: minmax(205px, .7fr) minmax(0, 2.3fr); align-items: center; gap: 40px; }
+    .payment-intro .eyebrow { margin-bottom: 7px; font-size: 9px; }
+    .payment-intro h3 { margin: 0; color: var(--navy); font-size: 19px; line-height: 1.18; }
+    .payment-intro p { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .payment-marquee { position: relative; width: 100%; overflow: hidden; padding: 7px 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+    .payment-track { display: flex; width: max-content; gap: 14px; animation: payment-scroll 27s linear infinite; will-change: transform; }
+    .payment-set { display: flex; flex: none; gap: 14px; }
+    .payment-marquee:hover .payment-track, .payment-marquee:focus-within .payment-track { animation-play-state: paused; }
+    .payment-badge { display: inline-flex; align-items: center; min-width: 158px; height: 64px; gap: 10px; padding: 8px 14px 8px 9px; border: 1px solid #e2eafd; border-radius: 15px; background: #fff; box-shadow: 0 8px 20px rgba(41, 66, 117, .07); color: var(--navy); }
+    .payment-mark { display: grid; flex: 0 0 42px; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--payment-color); color: #fff; font-family: Inter, sans-serif; font-size: 13px; font-weight: 900; letter-spacing: -.07em; box-shadow: inset 0 1px 0 rgba(255,255,255,.25); }
+    .payment-copy { display: grid; gap: 1px; line-height: 1.1; }
+    .payment-copy strong { font-family: Inter, sans-serif; font-size: 13px; letter-spacing: -.04em; }
+    .payment-copy small { color: #8a9ab7; font-family: Poppins, sans-serif; font-size: 8px; font-weight: 700; letter-spacing: .02em; }
+    @keyframes payment-scroll { to { transform: translateX(calc(-50% - 7px)); } }
+    @media (prefers-reduced-motion: reduce) { .payment-track { animation-play-state: paused; } }
+    .site-footer { padding: 68px 0 23px; background: var(--pale); }
+    .footer-grid { display: grid; grid-template-columns: 1.05fr 1fr 1.2fr; gap: 58px; }
+    .footer-about p { max-width: 330px; color: var(--muted); font-size: 12px; }
+    .socials { display: flex; gap: 10px; margin-top: 20px; }
+    .social { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid #dce7fb; border-radius: 50%; color: var(--primary); background: #fff; font-size: 13px; font-weight: 800; transition: .2s ease; }
+    .social:hover { border-color: var(--primary); color: #fff; background: var(--primary); box-shadow: 0 7px 14px rgba(95,127,245,.2); }
+    .social .icon { width: 17px; height: 17px; }
+    .footer-title { margin: 4px 0 19px; color: var(--primary); font-size: 18px; }
+    .footer-title::after { display: block; width: 50px; height: 3px; margin-top: 5px; border-radius: 9px; background: var(--primary); content: ""; }
+    .contact-list { display: grid; gap: 16px; }
+    .contact-item { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px; align-items: start; }
+    .contact-item .feature-icon { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; min-height: 36px; padding: 0; overflow: hidden; border-radius: 50%; background: #fff; line-height: 0; }
+    .contact-item .feature-icon .icon { display: block; width: 19px; height: 19px; margin: 0; flex: 0 0 19px; }
+    .contact-item strong { display: block; color: var(--navy); font-size: 12px; }
+    .contact-item span, .contact-item a { display: block; color: var(--muted); font-size: 11px; line-height: 1.6; }
+    .map-placeholder { display: grid; min-height: 192px; place-items: center; overflow: hidden; border: 1px solid #d7e6fa; border-radius: 16px; color: var(--navy); background: linear-gradient(135deg, #d4f0ec 0 23%, #e8f5ed 23% 47%, #d4e8f7 47% 69%, #edf5e9 69%); text-align: center; }
+    .map-live { position: relative; overflow: hidden; min-height: 225px; border: 1px solid #d7e6fa; border-radius: 16px; background: #eaf0fb; }
+    .map-live iframe { display: block; width: 100%; min-height: 225px; border: 0; }
+    .map-open { position: absolute; top: 12px; left: 12px; display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 8px; color: var(--primary-dark); background: #fff; box-shadow: 0 3px 10px rgba(26,52,91,.16); font-size: 10px; font-weight: 700; }
+    .map-open:hover { color: #fff; background: var(--primary); }
+    .map-pin { display: grid; place-items: center; width: 48px; height: 48px; margin: 0 auto 8px; border-radius: 50% 50% 50% 0; color: #fff; background: #e94e4e; transform: rotate(-45deg); box-shadow: 0 5px 14px rgba(174,36,36,.28); }
+    .map-pin .icon { transform: rotate(45deg); }
+    .map-placeholder b { display: block; font-size: 12px; }
+    .map-placeholder small { display: block; color: var(--muted); font-size: 10px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 52px; padding-top: 22px; border-top: 1px solid #dce7fa; color: #8292ac; font-size: 10px; }
+    .footer-bottom button { border: 0; color: var(--primary); background: none; font-weight: 700; }
+
+    /* Accordion and floating WhatsApp */
+    .terms { width: min(calc(100% - 40px), 790px); margin: 0 auto; }
+    .terms details { margin-bottom: 10px; border: 1px solid #dfe9fb; border-radius: 13px; background: #fff; }
+    .terms summary { padding: 16px 19px; color: var(--navy); cursor: pointer; font-size: 13px; font-weight: 700; }
+    .terms p { margin: 0; padding: 0 19px 17px; color: var(--muted); font-size: 12px; }
+    .float-wa { position: fixed; z-index: 25; right: 22px; bottom: 22px; display: inline-flex; align-items: center; gap: 9px; min-height: 54px; padding: 0 18px; border-radius: 999px; color: #fff; background: #25d366; box-shadow: 0 13px 26px rgba(25,151,78,.29); font-size: 13px; font-weight: 700; transition: transform .2s ease; }
+    .float-wa:hover { transform: translateY(-3px); }
+    .float-wa .icon { width: 23px; height: 23px; }
+    .notice { position: fixed; z-index: 60; bottom: 90px; left: 50%; max-width: calc(100vw - 40px); padding: 11px 16px; border-radius: 12px; color: #fff; background: var(--navy); box-shadow: var(--shadow); font-size: 12px; transform: translate(-50%, 18px); opacity: 0; pointer-events: none; transition: .25s ease; }
+    .notice.show { transform: translate(-50%, 0); opacity: 1; }
+
+    @media (max-width: 980px) {
+      .desktop-nav { gap: 17px; font-size: 13px; }
+      .nav-terms { margin-left: 2px; padding: 8px 12px; }
+      .reasons, .service-grid { gap: 18px; }
+      .reason-card { padding: 28px 22px; }
+      .trust-logos { grid-template-columns: repeat(3, 1fr); }
+      .partner-strip-inner { grid-template-columns: 1fr; gap: 18px; }
+    }
+    @media (max-width: 980px) and (min-width: 761px) {
+      .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, 150px); gap: 12px; }
+      .gallery-item { grid-column: auto; grid-row: auto !important; }
+      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2 !important; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(calc(100% - 32px), var(--container)); }
+      .section { padding: 72px 0; }
+      .nav-wrap { min-height: 72px; }
+      .brand-main { font-size: 26px; }
+      .desktop-nav { display: none; }
+      .menu-toggle { display: grid; }
+      .hero { min-height: 640px; }
+      .hero::after { background: linear-gradient(90deg, rgba(20,41,80,.88), rgba(35,59,104,.58)); }
+      .hero-inner { align-items: flex-start; padding-top: 95px; }
+      .hero h1 { font-size: 42px; }
+      .hero-card { right: 16px; bottom: 20px; left: 16px; }
+      .about-grid, .express-layout, .pickup-wrap { grid-template-columns: 1fr; }
+      .about-photo { min-height: 340px; }
+      .about-photo img { width: calc(100% - 26px); height: 340px; }
+      .about-stamp { width: 105px; border-width: 7px; }
+      .about-stamp strong { font-size: 28px; }
+      .feature-list { gap: 12px; }
+      .feature-row { align-items: flex-start; gap: 12px; }
+      .feature-icon { flex: 0 0 42px; }
+      .reasons { grid-template-columns: 1fr; }
+      .service-grid { grid-template-columns: repeat(2, 1fr); }
+      .service-card { min-height: 180px; padding: 16px; }
+      .service-card h3 { font-size: 14px; }
+      .price-tabs { overflow-x: auto; display: flex; }
+      .price-tab { min-width: 142px; }
+      .time-panel { padding: 19px 14px; }
+      .time-tabs { gap: 8px; }
+      .time-tab { padding: 0 13px; font-size: 11px; }
+      .price-row { padding: 16px 17px; font-size: 12px; }
+      .price-note { padding: 14px 17px; }
+      .express-image { min-height: 340px; }
+      .gallery-section { padding-top: 68px; padding-bottom: 68px; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; grid-auto-rows: 142px; gap: 10px; }
+      .gallery-item { grid-column: auto; grid-row: auto !important; border-radius: 14px; }
+      .gallery-item:nth-child(1), .gallery-item:nth-child(6) { grid-column: span 2; }
+      .pickup-aside, .pickup-form { padding: 38px 27px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .form-foot { align-items: flex-start; flex-direction: column-reverse; }
+      .form-foot .btn { width: 100%; }
+      .partner-strip { padding: 37px 0; }
+      .payment-badge { min-width: 150px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 35px; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; margin-top: 37px; }
+      .float-wa { right: 15px; bottom: 15px; min-height: 48px; padding: 0 14px; }
+    }
+    @media (max-width: 390px) { .service-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 37px; } .float-wa span { display: none; } .float-wa { width: 51px; justify-content: center; padding: 0; } }
+  </style>
+</head>
+<body>
+  <!-- SVG symbols keep the page self-contained and can be reused anywhere. -->
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute;overflow:hidden">
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M12.04 2A9.79 9.79 0 0 0 3.7 16.95L2.4 21.7l4.88-1.28A9.8 9.8 0 1 0 12.04 2Zm0 17.98a8.15 8.15 0 0 1-4.15-1.13l-.3-.18-2.89.76.77-2.81-.2-.3a8.16 8.16 0 1 1 6.77 3.66Zm4.48-6.11c-.25-.13-1.48-.73-1.71-.81-.23-.09-.4-.13-.57.13-.17.25-.65.8-.8.96-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.15-.26-.02-.4.11-.53.11-.11.25-.3.38-.45.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.07-.13-.57-1.37-.78-1.87-.2-.49-.41-.42-.57-.43h-.48c-.17 0-.45.06-.68.32-.23.25-.89.87-.89 2.12 0 1.24.91 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.82.6.26 1.07.42 1.43.54.6.19 1.15.16 1.58.1.48-.07 1.48-.6 1.69-1.18.21-.57.21-1.07.15-1.18-.06-.11-.23-.17-.48-.3Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4.2 4.2L19 6.7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 6v6l4 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Zm-8 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3V6Zm11 4h4l3 3v3h-7v-6Zm-7 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm10 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 2 1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2Zm7 13 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"/></symbol>
+    <symbol id="i-hygiene-shield" viewBox="0 0 24 24"><path d="M12 3 19 6v5.1c0 4.6-2.9 7.9-7 9.9-4.1-2-7-5.3-7-9.9V6l7-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m12 7 .9 2.8 2.8.9-2.8.9-.9 2.8-.9-2.8-2.8-.9 2.8-.9L12 7Zm4.3 6.1.45 1.45 1.45.45-1.45.45-.45 1.45-.45-1.45-1.45-.45 1.45-.45.45-1.45Z"/></symbol>
+    <symbol id="i-flex-time" viewBox="0 0 24 24"><path d="M5 5.5h14v13H5v-13Zm4-2v4m6-4v4M5 9.5h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 12.5v2.4l1.7 1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-pickup-home" viewBox="0 0 24 24"><path d="m3 11 5-4.4 5 4.4v7H9.6v-4H6.4v4H3v-7Zm11.5 2h3l2.5 2.4V18h-5.5v-5Zm1.8 7a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7Zm4.1 0a1.35 1.35 0 1 0 0-2.7 1.35 1.35 0 0 0 0 2.7Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 7.5h5M17.5 5.5l2 2-2 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-shirt" viewBox="0 0 24 24"><path d="m8 4 2 3h4l2-3 5 3-3 5-2-1v9H8v-9l-2 1-3-5 5-3Z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l1 13H4L5 8Zm4 0V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-shoe" viewBox="0 0 24 24"><path d="M4 16c3-1 4-4 5-8 2 3 4 5 8 5 2.2 0 3.5 1.4 3.5 3.5V19H4v-3Z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3v-9Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 3h3l1.5 4-2 1.5a14 14 0 0 0 6 6l1.5-2 4 1.5v3c0 1.1-.9 2-2 2C10.2 19 5 13.8 5 5c0-1.1.9-2 2-2Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 5h14M8 2v4m8-4v4" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.3A4.7 4.7 0 1 1 12 16.7a4.7 4.7 0 0 1 0-9.4Zm0 2A2.7 2.7 0 1 0 12 14.7a2.7 2.7 0 0 0 0-5.4Zm5.05-3.55a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M13.7 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46H16.8V3.96c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.87 1.4-3.87 3.98V10H8v3h2.61v8h3.09Z"/></symbol>
+    <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M15.4 3c.35 2.45 1.75 3.9 4.1 4.1v3.08a7.2 7.2 0 0 1-4.02-1.17v6.2a5.94 5.94 0 1 1-5.14-5.9v3.16a2.89 2.89 0 1 0 2.07 2.76V3h2.99Z"/></symbol>
+    <symbol id="i-pickup-route" viewBox="0 0 24 24"><path d="M4 17h7m6 0h3M7 20a1.7 1.7 0 1 0 0-3.4A1.7 1.7 0 0 0 7 20Zm12 0a1.7 1.7 0 1 0 0-3.4A1.7 1.7 0 0 0 19 20ZM4 8h10v9H4V8Zm10 3h3l3 3v3h-6v-6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M5 5c1.4-1.6 3.4-2 5.1-1.1 1.6.9 1.6 2.4.2 3.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="1.2 2.4"/><path d="m9.3 4.1 1.8-.4-.4 1.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-wash-care" viewBox="0 0 24 24"><path d="M5 4h14v16H5V4Zm0 5h14M8 6.5h.1m2.3 0h.1M12 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m18.3 2 .6 1.6 1.6.6-1.6.6-.6 1.6-.6-1.6-1.6-.6 1.6-.6.6-1.6Z"/></symbol>
+    <symbol id="i-delivery-care" viewBox="0 0 24 24"><path d="m3.5 11 8.5-7 8.5 7v9H15v-5H9v5H3.5v-9Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M17.2 13.2c1.5-1.8 4.3.2 2.8 2.1L17.2 18l-2.8-2.7c-1.5-1.9 1.3-3.9 2.8-2.1Z" fill="currentColor"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#beranda" aria-label="Beranda">
+        <span><span class="brand-main" data-brand>Bri<span>wash</span></span><span class="brand-sub" data-brand-sub>LAUNDRY EXPRESS</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Navigasi utama">
+        <a href="#beranda">Beranda</a><a href="#tentang">Tentang</a><a href="#layanan">Layanan</a><a href="#harga">Daftar Harga</a><a href="#testimoni">Testimoni</a><a href="#kontak">Kontak</a>
+        <a class="nav-terms" href="#syarat">▣ &nbsp;Syarat &amp; Ketentuan</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false"><svg><use href="#i-menu"></use></svg></button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Navigasi seluler">
+      <a href="#beranda">Beranda</a><a href="#tentang">Tentang</a><a href="#layanan">Layanan</a><a href="#harga">Daftar Harga</a><a href="#testimoni">Testimoni</a><a href="#kontak">Kontak</a><a href="#syarat">Syarat &amp; Ketentuan</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="beranda">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Laundry express premium</span>
+          <h1>Waktu Anda berharga.<br><em>Biarkan kami yang urus cucian.</em></h1>
+          <p>Template landing page untuk layanan laundry modern — bersih, praktis, dan siap dijemput dari rumah Anda.</p>
+          <div class="hero-actions"><a class="btn btn-primary wa-link" href="#pickup"><svg class="icon"><use href="#i-whatsapp"></use></svg> Pesan Pickup</a><a class="btn btn-ghost" href="#harga">Lihat Daftar Harga</a></div>
+          <div class="hero-trust"><div><span class="check"><svg><use href="#i-check"></use></svg></span><span><b>Pickup cepat</b> area terdekat</span></div><div><span class="check"><svg><use href="#i-check"></use></svg></span><span><b>Proses premium</b> dan higienis</span></div></div>
+        </div>
+      </div>
+      <div class="hero-card"><span class="hero-card-icon"><svg class="icon"><use href="#i-clock"></use></svg></span><span><b>Butuh cepat?</b><small>Express selesai dalam 3 jam*</small></span></div>
+    </section>
+
+    <section class="section" id="tentang">
+      <div class="container about-grid">
+        <div class="about-photo"><img data-image="aboutImage" alt="Staf laundry menyambut pelanggan" /><span class="employee-tag"><span><strong data-staff-name>Tim Briwash</strong><small data-staff-role>Customer Care</small></span></span><div class="about-stamp"><div><strong>3 Jam</strong><span>Express<br>selesai*</span></div></div></div>
+        <div class="about-content"><span class="eyebrow">Tentang kami</span><h2>Laundry premium yang dibuat untuk ritme hidup Anda.</h2><p>Ini adalah konten demo yang terinspirasi dari struktur referensi. Gunakan bagian ini untuk menceritakan standar pelayanan, cerita usaha, dan alasan pelanggan mempercayai brand Anda.</p>
+          <div class="feature-list"><div class="feature-row"><span class="feature-icon"><svg class="icon"><use href="#i-sparkle"></use></svg></span><span><strong>Detail di setiap proses</strong><span>Pemilahan dan penanganan disesuaikan dengan jenis barang.</span></span></div><div class="feature-row"><span class="feature-icon"><svg class="icon"><use href="#i-truck"></use></svg></span><span><strong>Pickup &amp; delivery terjadwal</strong><span>Jemput dan antar praktis, tanpa mengganggu aktivitas Anda.</span></span></div><div class="feature-row"><span class="feature-icon"><svg class="icon"><use href="#i-clock"></use></svg></span><span><strong>Estimasi transparan</strong><span>Pilih paket waktu yang paling sesuai dengan kebutuhan.</span></span></div></div>
+          <a href="#pickup" class="btn btn-primary">Mulai Request Pickup</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint">
+      <div class="container"><div class="section-heading"><span class="eyebrow">Kenapa memilih kami</span><h2>Lebih dari sekadar cucian bersih</h2><div class="title-rule"></div><p style="margin-top:16px">Rancangan layanan yang menonjolkan ketelitian, kenyamanan, dan waktu Anda.</p></div>
+        <div class="reasons">
+          <article class="reason-card"><span class="round-icon"><svg class="icon"><use href="#i-hygiene-shield"></use></svg></span><h3>Proses Higienis</h3><p>Setiap kategori dapat dipisahkan agar perawatan lebih aman dan optimal.</p></article>
+          <article class="reason-card"><span class="round-icon"><svg class="icon"><use href="#i-flex-time"></use></svg></span><h3>Waktu Fleksibel</h3><p>Paket reguler hingga express membantu Anda memilih kapan cucian selesai.</p></article>
+          <article class="reason-card"><span class="round-icon"><svg class="icon"><use href="#i-pickup-home"></use></svg></span><h3>Praktis dari Rumah</h3><p>Request pickup melalui WhatsApp, lalu tim mengatur proses selanjutnya.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="layanan" style="padding-top:0">
+      <div class="container"><div class="section-heading"><span class="eyebrow">Pilihan layanan</span><h2>Our Services</h2><div class="title-rule"></div><p style="margin-top:16px">Pilihan layanan lengkap untuk kebutuhan pakaian dan barang kesayangan Anda.</p></div><div class="service-grid" id="serviceGrid"></div></div>
+    </section>
+
+    <section class="section" id="harga">
+      <div class="container"><div class="section-heading"><span class="eyebrow">Estimasi layanan</span><h2>Daftar Harga Layanan</h2><div class="title-rule"></div><p style="margin-top:16px">Pilih kategori dan estimasi waktu pengerjaan untuk melihat detail harga demo.</p></div>
+        <div class="pricing-box"><div class="price-tabs" id="priceCategoryTabs" role="tablist" aria-label="Kategori harga"></div><div class="time-panel"><span class="time-caption">PILIH PAKET WAKTU</span><div class="time-tabs" id="priceTimeTabs" role="tablist" aria-label="Paket waktu"></div></div><ul class="price-list" id="priceList"></ul><div class="price-note" id="priceNote"></div></div>
+        <div class="price-cta"><a href="#pickup" class="btn btn-primary"><svg class="icon"><use href="#i-whatsapp"></use></svg> Pesan Sekarang</a></div>
+      </div>
+    </section>
+
+    <section class="section" id="express" style="padding-top:10px">
+      <div class="container"><div class="section-heading"><span class="eyebrow">Layanan unggulan</span><h2>Laundry Express 3 Jam Selesai</h2><div class="title-rule"></div><p style="margin-top:16px">Saat cucian mendesak, alur sederhana ini membantu order diproses lebih cepat.</p></div>
+        <div class="express-layout"><div class="express-image" role="img" aria-label="Ilustrasi proses laundry express"></div><div class="process-stack"><article class="process-card"><span class="round-icon"><svg class="icon"><use href="#i-pickup-route"></use></svg></span><div><h3>1. Pickup Express</h3><p>Setelah request masuk, jadwal penjemputan dikonfirmasi sesuai ketersediaan area.</p></div></article><article class="process-card"><span class="round-icon"><svg class="icon"><use href="#i-wash-care"></use></svg></span><div><h3>2. Proses Premium</h3><p>Barang diproses dengan perhatian pada kebersihan, kerapian, dan jenis material.</p></div></article><article class="process-card"><span class="round-icon"><svg class="icon"><use href="#i-delivery-care"></use></svg></span><div><h3>3. Delivery Tepat Waktu</h3><p>Setelah selesai, laundry diantar kembali agar siap digunakan sesuai estimasi.</p></div></article></div></div>
+      </div>
+    </section>
+
+    <section class="trust-band"><div class="container"><div class="section-heading"><span class="eyebrow" style="color:#aec3ff">Dipercaya untuk kebutuhan rutin</span><h2>Partner pilihan untuk hunian &amp; bisnis</h2><p>Gunakan contoh berikut untuk menampilkan nama dan foto partner bisnis yang benar-benar bekerja sama dengan Anda.</p></div><div class="trust-logos" id="partnerGrid"></div></div></section>
+
+    <section class="section gallery-section"><div class="container"><div class="section-heading"><span class="eyebrow">Momen di balik proses</span><h2>Gallery</h2><div class="title-rule"></div><p style="margin-top:16px">Ganti foto placeholder dengan outlet, tim, proses, atau hasil laundry Anda.</p></div><div class="gallery" id="gallery"></div></div></section>
+
+    <section class="section section-tint" id="testimoni"><div class="container"><div class="section-heading"><span class="eyebrow">Cerita pelanggan</span><h2>Testimoni</h2><div class="title-rule"></div><p style="margin-top:16px">Konten berikut hanyalah contoh tampilan — ganti dengan ulasan yang telah Anda dapatkan izin untuk tampilkan.</p></div><div class="testimonial-rail" id="testimonialRail"></div></div></section>
+
+    <section class="section" id="pickup"><div class="container"><div class="pickup-wrap"><aside class="pickup-aside"><span class="eyebrow" style="color:#dce6ff">Pickup request</span><h2>Pesan laundry tanpa repot keluar rumah.</h2><p>Isi form singkat ini. Tombol di bawah akan membuka WhatsApp dengan pesan yang telah disusun otomatis.</p><div class="pickup-points"><div class="pickup-point"><span class="check"><svg><use href="#i-check"></use></svg></span><span><b>Konfirmasi cepat</b><span>Tim Anda dapat membalas via WhatsApp.</span></span></div><div class="pickup-point"><span class="check"><svg><use href="#i-check"></use></svg></span><span><b>Jadwal fleksibel</b><span>Pelanggan memilih waktu yang diinginkan.</span></span></div><div class="pickup-point"><span class="check"><svg><use href="#i-check"></use></svg></span><span><b>Data terkontrol</b><span>Form ini tidak mengirim data ke server.</span></span></div></div></aside>
+        <form class="pickup-form" id="pickupForm"><h3>Request Pickup</h3><div class="form-grid"><div class="field"><label for="name">Nama lengkap</label><input id="name" name="name" placeholder="Nama Anda" required /></div><div class="field"><label for="phone">Nomor WhatsApp</label><input id="phone" name="phone" inputmode="tel" placeholder="08xx xxxx xxxx" required /></div><div class="field"><label for="service">Layanan</label><select id="service" name="service"></select></div><div class="field"><label for="schedule">Jadwal pickup</label><input id="schedule" name="schedule" type="datetime-local" /></div><div class="field full"><label for="address">Alamat penjemputan</label><textarea id="address" name="address" placeholder="Tulis alamat atau patokan lokasi" required></textarea></div><div class="field full"><label for="notes">Catatan tambahan <span style="font-weight:400;color:var(--muted)">(opsional)</span></label><input id="notes" name="notes" placeholder="Contoh: ada pakaian putih, hubungi sebelum tiba" /></div></div><div class="form-foot"><small>Dengan mengirim form, Anda akan dialihkan ke WhatsApp. Detail operasional dan harga akhir dapat dikonfirmasi oleh admin.</small><button class="btn btn-primary" type="submit"><svg class="icon"><use href="#i-whatsapp"></use></svg> Kirim ke WhatsApp</button></div></form>
+      </div></div></section>
+
+    <section class="section section-tint" id="syarat" style="padding-top:75px;padding-bottom:75px"><div class="container"><div class="section-heading" style="margin-bottom:30px"><span class="eyebrow">Informasi demo</span><h2>Syarat &amp; Ketentuan</h2><p>Accordion sederhana ini siap diisi kebijakan layanan bisnis Anda.</p></div><div class="terms"><details open><summary>Bagaimana cara kerja layanan pickup?</summary><p>Contoh: admin mengonfirmasi ketersediaan area, waktu pickup, estimasi layanan, dan detail order sebelum pekerjaan dimulai.</p></details><details><summary>Apakah harga pada halaman ini merupakan harga final?</summary><p>Tidak. Semua harga dan keterangan di template ini merupakan konten demo dan perlu disesuaikan dengan bisnis Anda.</p></details><details><summary>Bagaimana dengan barang khusus?</summary><p>Contoh: untuk tas, sepatu, atau bahan sensitif, mintalah pelanggan berkonsultasi melalui WhatsApp terlebih dahulu.</p></details></div></div></section>
+  </main>
+
+  <section class="partner-strip" aria-labelledby="paymentTitle"><div class="container partner-strip-inner"><div class="payment-intro"><span class="eyebrow">Pembayaran mudah</span><h3 id="paymentTitle">Pilih metode pembayaran Anda</h3><p data-payment-notice>Daftar metode pembayaran dapat diatur sesuai layanan yang benar-benar diterima toko Anda.</p></div><div class="payment-marquee" aria-label="Metode pembayaran yang dapat dipilih"><div class="payment-track" id="paymentTrack"></div></div></div></section>
+  <footer class="site-footer" id="kontak"><div class="container"><div class="footer-grid"><div class="footer-about"><a class="brand" href="#beranda"><span><span class="brand-main" data-brand>Bri<span>wash</span></span><span class="brand-sub" data-brand-sub>LAUNDRY EXPRESS</span></span></a><p data-footer-description>Layanan laundry express premium no. 1 di Bandung. Karena hidup bukan hanya tentang bekerja, tapi juga menikmati setiap momen tanpa beban cucian.</p><div class="socials"><a class="social" data-social="instagram" href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"></use></svg></a><a class="social" data-social="facebook" href="#" aria-label="Facebook"><svg class="icon"><use href="#i-facebook"></use></svg></a><a class="social" data-social="tiktok" href="#" aria-label="TikTok"><svg class="icon"><use href="#i-tiktok"></use></svg></a></div></div>
+        <div><h3 class="footer-title">Hubungi Kami</h3><div class="contact-list"><div class="contact-item"><span class="feature-icon"><svg class="icon"><use href="#i-clock"></use></svg></span><span><strong>Buka Setiap Hari</strong><span data-hours>07.00 – 20.00 WIB</span></span></div><div class="contact-item"><span class="feature-icon"><svg class="icon"><use href="#i-pin"></use></svg></span><span><strong>Lokasi Outlet</strong><span data-address>Jl. Cihampelas No.193 A, Bandung</span></span></div><div class="contact-item"><span class="feature-icon"><svg class="icon"><use href="#i-whatsapp"></use></svg></span><span><strong>Layanan WhatsApp</strong><a class="wa-link" data-whatsapp-display href="#pickup">Hubungi Admin</a></span></div></div></div>
+        <div><h3 class="footer-title">Peta Lokasi</h3><div class="map-live"><iframe id="mapFrame" title="Peta lokasi outlet" loading="eager" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="map-open" id="mapOpen" href="#" target="_blank" rel="noopener">Buka di Google Maps ↗</a></div></div>
+      </div><div class="footer-bottom"><span>© <span id="year"></span> <span data-brand>Briwash</span>. Template demo. All rights reserved.</span><button id="backToTop">Kembali ke atas ↑</button></div></div></footer>
+
+  <a class="float-wa wa-link" href="#pickup" aria-label="Chat via WhatsApp"><svg class="icon"><use href="#i-whatsapp"></use></svg><span>WhatsApp</span></a><div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+  <script>
+    /*
+      ======================================================================
+      CONFIG — Ubah nilai berikut untuk memakai template ini pada bisnis Anda.
+      Gambar Unsplash hanya placeholder visual. Ganti dengan URL gambar sendiri.
+      Semua harga dan nama layanan di bawah adalah DATA DEMO, bukan data bisnis asli.
+      ======================================================================
+    */
+    const CONFIG = {
+      brandName: 'Briwash',
+      brandSuffix: 'LAUNDRY EXPRESS',
+      whatsapp: '6282338903403', // format internasional, tanpa + atau spasi
+      whatsappDisplay: '0823-3890-3403',
+      address: 'Jl. Cihampelas No.193 A, Cipaganti, Bandung',
+      hours: '07.00 – 20.00 WIB',
+      // Ganti link ini dengan profil sosial media bisnis Anda.
+      socialLinks: {
+        instagram: 'https://instagram.com/',
+        facebook: 'https://facebook.com/',
+        tiktok: 'https://tiktok.com/'
+      },
+      // Gunakan nama usaha atau alamat lengkap agar titik peta lebih akurat.
+      mapQuery: 'Jl. Cihampelas No.193 A, Cipaganti, Bandung',
+      mapZoom: 16,
+      // Opsional: tempel URL "Embed a map" dari Google Maps di sini agar titik lokasi sangat presisi.
+      // Biarkan kosong untuk membuat peta langsung dari mapQuery di atas.
+      mapEmbedUrl: '',
+      colors: { primary: '#5f7ff5', primaryDark: '#405fd0', navy: '#263b62' },
+      // Ganti URL gambar di bawah ini dengan gambar Anda sendiri bila sudah siap.
+      heroImage: 'url("assets/hero-image.jpg")',
+      // Foto staf pada bagian Tentang. Ganti file ini kapan saja dengan foto tim Anda.
+      aboutImage: 'assets/about-image.jpg',
+      staffName: 'Laundry Bandung',
+      staffRole: 'Express laundry',
+      expressImage: 'url("assets/express-image.jpg")',
+      // Setiap gambar di bawah adalah placeholder Unsplash dan dapat diganti satu per satu.
+      services: [
+        { name: 'Daily Kiloan', icon: 'i-shirt', image: 'assets/services/daily-kiloan.jpg' },
+        { name: 'Premium Satuan', icon: 'i-sparkle', image: 'assets/services/premium-satuan.jpg' },
+        { name: 'Tas Premium', icon: 'i-bag', image: 'assets/services/tas-premium.jpg' },
+        { name: 'Sepatu', icon: 'i-shoe', image: 'assets/services/sepatu.jpg' },
+        { name: 'Karpet', icon: 'i-home', image: 'assets/services/karpet.jpg' },
+        { name: 'Boneka', icon: 'i-sparkle', image: 'assets/services/boneka.jpg' },
+        { name: 'Gorden', icon: 'i-home', image: 'assets/services/gorden.jpg' },
+        { name: 'Baby Stroller', icon: 'i-truck', image: 'assets/services/baby-stroller.jpg' },
+        { name: 'Helm', icon: 'i-clock', image: 'assets/services/helm.jpg' }
+      ],
+      // Ganti nama dan gambar ini dengan partner resmi bisnis Anda.
+      partners: [
+        { name: 'Kost Melati Bandung', type: 'Kost Putri', image: 'assets/partners/kost-melati.jpg' },
+        { name: 'Ponpes Nurul Huda', type: 'Instansi Pendidikan', image: 'assets/partners/ponpes-nurul-huda.jpg' },
+        { name: 'Hotel Amaris Bandung', type: 'Penginapan', image: 'assets/partners/hotel-amaris.jpg' },
+        { name: 'WO Amanda Salon', type: 'Weeding Organizer', image: 'assets/partners/wo-amanda-salon.jpg' },
+        { name: 'Perumahan Griya Indah', type: 'Hunian', image: 'assets/partners/perumahan-griya-indah.jpg' },
+        { name: 'Kost Melasa Putra', type: 'Kost Putra', image: 'assets/partners/kost-melasa-putra.jpg' }
+      ],
+      // Aktifkan hanya metode pembayaran yang benar-benar diterima toko Anda.
+      paymentNotice: 'Pilih aplikasi atau metode pembayaran yang tersedia di bawah. Konfirmasikan kepada admin bila diperlukan.',
+      paymentMethods: [
+        { name: 'QRIS', detail: 'Scan & bayar', mark: 'QR', color: '#1d5fd2' },
+        { name: 'GoPay', detail: 'E-wallet', mark: 'G', color: '#00aede' },
+        { name: 'OVO', detail: 'E-wallet', mark: 'O', color: '#4c2b9b' },
+        { name: 'DANA', detail: 'E-wallet', mark: 'D', color: '#108ee9' },
+        { name: 'ShopeePay', detail: 'E-wallet', mark: 'S', color: '#ee4d2d' },
+        { name: 'Transfer Bank', detail: 'Rekening toko', mark: '↔', color: '#1b5fab' },
+        { name: 'Kartu', detail: 'Debit / kredit', mark: '▰', color: '#263b62' }
+      ],
+      pricing: {
+        'Daily Kiloan': {
+          note: '*Khusus kiloan minimal 3 Kg. Harga adalah data demo.',
+          times: {
+            'Reguler': [['Cuci Kering Lipat (Min. 3kg)', 'Rp 5.000/kg'], ['Cuci Kering Gosok (Min. 3kg)', 'Rp 8.000/kg'], ['Setrika Kiloan (Min. 3kg)', 'Rp 5.000/kg']],
+            'One Day (24 jam)': [['Cuci Kering Lipat (Min. 3kg)', 'Rp 7.000/kg'], ['Cuci Kering Gosok (Min. 3kg)', 'Rp 10.000/kg'], ['Setrika Kiloan (Min. 3kg)', 'Rp 7.000/kg']],
+            'Express (6 jam)': [['Cuci Kering Lipat (Min. 3kg)', 'Rp 11.000/kg'], ['Cuci Kering Gosok (Min. 3kg)', 'Rp 14.000/kg'], ['Setrika Kiloan (Min. 3kg)', 'Rp 11.000/kg']],
+            'Quick': [['Cuci Kering Lipat (Min. 3kg)', 'Hubungi admin'], ['Cuci Kering Gosok (Min. 3kg)', 'Hubungi admin']]
+          }
+        },
+        'Premium Satuan': {
+          note: '*Penanganan dan harga final menyesuaikan material. Data demo.',
+          times: {
+            'Reguler': [['Kemeja / Blouse', 'Rp 15.000'], ['Dress', 'Rp 35.000'], ['Jas / Blazer', 'Rp 45.000'], ['Bed Cover', 'Rp 55.000']],
+            'One Day (24 jam)': [['Kemeja / Blouse', 'Rp 20.000'], ['Dress', 'Rp 45.000'], ['Jas / Blazer', 'Rp 60.000']],
+            'Express (6 jam)': [['Kemeja / Blouse', 'Rp 30.000'], ['Dress', 'Rp 65.000'], ['Jas / Blazer', 'Rp 85.000']]
+          }
+        },
+        'Shoes & Bags': {
+          note: '*Konsultasikan kondisi barang sebelum order. Data demo.',
+          times: {
+            'Reguler': [['Cleaning sepatu canvas', 'Rp 45.000'], ['Cleaning sneaker', 'Rp 65.000'], ['Tas ukuran kecil', 'Rp 80.000'], ['Tas ukuran besar', 'Rp 120.000']],
+            'One Day (24 jam)': [['Cleaning sepatu canvas', 'Rp 60.000'], ['Cleaning sneaker', 'Rp 85.000'], ['Tas ukuran kecil', 'Rp 105.000']]
+          }
+        },
+        'Households': {
+          note: '*Harga dapat berubah berdasarkan ukuran dan kondisi barang. Data demo.',
+          times: {
+            'Reguler': [['Karpet kecil', 'Rp 45.000'], ['Karpet besar', 'Rp 90.000'], ['Boneka kecil', 'Rp 25.000'], ['Gorden', 'Mulai Rp 20.000']],
+            'One Day (24 jam)': [['Karpet kecil', 'Rp 60.000'], ['Karpet besar', 'Rp 120.000'], ['Boneka kecil', 'Rp 35.000']]
+          }
+        }
+      },
+      // Ubah image, caption, dan alt pada setiap kartu gallery di bawah ini.
+      // URL Unsplash hanya placeholder; Anda dapat menggantinya dengan foto usaha sendiri.
+      gallery: [
+        { image: 'assets/gallery/proses-pencucian.jpg', caption: 'Proses pencucian', alt: 'Keranjang berisi pakaian untuk proses pencucian' },
+        { image: 'assets/gallery/mesin-profesional.jpg', caption: 'Mesin profesional', alt: 'Mesin laundry profesional' },
+        { image: 'assets/gallery/penanganan-laundry.jpg', caption: 'Penanganan laundry', alt: 'Peralatan dan proses layanan laundry' },
+        { image: 'assets/gallery/perawatan-detail.jpg', caption: 'Perawatan detail', alt: 'Perawatan detail pakaian laundry' },
+        { image: 'assets/gallery/deterjen-pilihan.jpg', caption: 'Deterjen pilihan', alt: 'Produk perawatan untuk laundry' },
+        { image: 'assets/gallery/hasil-lipat-rapi.jpg', caption: 'Hasil lipat rapi', alt: 'Tumpukan pakaian dan kain bersih yang rapi' }
+      ],
+      testimonials: [
+        { initials: 'NA', name: 'Nadia A.', role: 'Pelanggan demo', quote: '“Prosesnya rapi dan komunikasinya nyaman. Tinggal request pickup lalu bisa lanjut aktivitas.”' },
+        { initials: 'RP', name: 'Raka P.', role: 'Pelanggan demo', quote: '“Pilihan paket waktunya membantu saat butuh baju cepat untuk agenda mendadak.”' },
+        { initials: 'SM', name: 'Sarah M.', role: 'Pelanggan demo', quote: '“Tampilan ordernya sederhana, detail layanan mudah dipahami, dan pengalaman terasa premium.”' },
+        { initials: 'DI', name: 'Dimas I.', role: 'Pelanggan demo', quote: '“Contoh testimonial ini siap diganti dengan ulasan asli pelanggan Anda setelah mendapat izin.”' }
+      ]
+    };
+
+    const $ = (selector, parent = document) => parent.querySelector(selector);
+    const $$ = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+    let activeCategory = Object.keys(CONFIG.pricing)[0];
+    let activeTime = Object.keys(CONFIG.pricing[activeCategory].times)[0];
+
+    function icon(id, className = 'icon') { return `<svg class="${className}" aria-hidden="true"><use href="#${id}"></use></svg>`; }
+    function setConfigValues() {
+      document.documentElement.style.setProperty('--primary', CONFIG.colors.primary);
+      document.documentElement.style.setProperty('--primary-dark', CONFIG.colors.primaryDark);
+      document.documentElement.style.setProperty('--navy', CONFIG.colors.navy);
+      document.documentElement.style.setProperty('--hero-image', CONFIG.heroImage);
+      document.documentElement.style.setProperty('--express-image', CONFIG.expressImage);
+      document.title = `${CONFIG.brandName} — Demo`;
+      $$('[data-brand]').forEach(el => { el.innerHTML = `${CONFIG.brandName.slice(0, 3)}<span>${CONFIG.brandName.slice(3)}</span>`; });
+      $$('[data-brand-sub]').forEach(el => el.textContent = CONFIG.brandSuffix);
+      $$('[data-address]').forEach(el => el.textContent = CONFIG.address);
+      $$('[data-hours]').forEach(el => el.textContent = CONFIG.hours);
+      $$('[data-staff-name]').forEach(el => el.textContent = CONFIG.staffName);
+      $$('[data-staff-role]').forEach(el => el.textContent = CONFIG.staffRole);
+      $$('[data-payment-notice]').forEach(el => el.textContent = CONFIG.paymentNotice);
+      $$('[data-whatsapp-display]').forEach(el => el.textContent = CONFIG.whatsappDisplay);
+      $$('[data-image="aboutImage"]').forEach(el => el.src = CONFIG.aboutImage);
+      $$('#year').forEach(el => el.textContent = new Date().getFullYear());
+      $$('.wa-link').forEach(el => { el.href = `https://wa.me/${CONFIG.whatsapp}`; el.target = '_blank'; el.rel = 'noopener'; });
+      $$('[data-social]').forEach(el => {
+        const url = CONFIG.socialLinks[el.dataset.social];
+        if (url) { el.href = url; el.target = '_blank'; el.rel = 'noopener'; }
+      });
+      const mapQuery = CONFIG.mapQuery || CONFIG.address;
+      const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+      const mapEmbedUrl = CONFIG.mapEmbedUrl || `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=${CONFIG.mapZoom || 16}&output=embed`;
+      $('#mapFrame').src = mapEmbedUrl;
+      $('#mapOpen').href = mapUrl;
+    }
+
+    function renderServices() {
+      $('#serviceGrid').innerHTML = CONFIG.services.map(service => `<article class="service-card"><img class="service-photo" src="${service.image}" loading="lazy" alt="Layanan ${service.name}" /><div class="service-content"><span class="service-mini-icon">${icon(service.icon)}</span><h3>${service.name}</h3></div></article>`).join('');
+      const select = $('#service');
+      select.innerHTML = '<option value="">Pilih layanan</option>' + CONFIG.services.map(s => `<option>${s.name}</option>`).join('');
+    }
+
+    function renderPartners() {
+      $('#partnerGrid').innerHTML = CONFIG.partners.map(partner => `<article class="trust-logo"><img src="${partner.image}" loading="lazy" alt="${partner.name}" /><span>${partner.name}<small>${partner.type}</small></span></article>`).join('');
+    }
+
+    function renderPaymentMethods() {
+      const renderSet = hidden => `<div class="payment-set"${hidden ? ' aria-hidden="true"' : ''}>${CONFIG.paymentMethods.map(method => `<span class="payment-badge" style="--payment-color:${method.color}"><span class="payment-mark">${method.mark}</span><span class="payment-copy"><strong>${method.name}</strong><small>${method.detail}</small></span></span>`).join('')}</div>`;
+      $('#paymentTrack').innerHTML = renderSet(false) + renderSet(true);
+    }
+
+    function renderPrices() {
+      const pricing = CONFIG.pricing[activeCategory];
+      const categories = Object.keys(CONFIG.pricing);
+      if (!pricing.times[activeTime]) activeTime = Object.keys(pricing.times)[0];
+      $('#priceCategoryTabs').innerHTML = categories.map(category => `<button class="price-tab ${category === activeCategory ? 'active' : ''}" type="button" role="tab" aria-selected="${category === activeCategory}" data-category="${category}">${category}</button>`).join('');
+      $('#priceTimeTabs').innerHTML = Object.keys(pricing.times).map(time => `<button class="time-tab ${time === activeTime ? 'active' : ''}" type="button" role="tab" aria-selected="${time === activeTime}" data-time="${time}">${time}</button>`).join('');
+      $('#priceList').innerHTML = pricing.times[activeTime].map(([name, price]) => `<li class="price-row"><span>${name}</span><strong>${price}</strong></li>`).join('');
+      $('#priceNote').textContent = pricing.note;
+      $$('.price-tab').forEach(btn => btn.addEventListener('click', () => { activeCategory = btn.dataset.category; activeTime = Object.keys(CONFIG.pricing[activeCategory].times)[0]; renderPrices(); }));
+      $$('.time-tab').forEach(btn => btn.addEventListener('click', () => { activeTime = btn.dataset.time; renderPrices(); }));
+    }
+
+    function renderGallery() {
+      $('#gallery').innerHTML = CONFIG.gallery.map(item => {
+        const data = Array.isArray(item) ? { image: item[0], caption: item[1], alt: item[1] } : item;
+        return `<figure class="gallery-item"><img src="${data.image}" loading="lazy" alt="${data.alt || data.caption}" /><span>${data.caption}</span></figure>`;
+      }).join('');
+    }
+    function renderTestimonials() { $('#testimonialRail').innerHTML = CONFIG.testimonials.map(item => `<article class="testimonial"><div class="stars" aria-label="5 dari 5 bintang">★★★★★</div><blockquote>${item.quote}</blockquote><div class="reviewer"><span class="avatar">${item.initials}</span><span><strong>${item.name}</strong><small>${item.role}</small></span></div></article>`).join(''); }
+
+    function showNotice(message) { const notice = $('#notice'); notice.textContent = message; notice.classList.add('show'); window.clearTimeout(showNotice.timer); showNotice.timer = window.setTimeout(() => notice.classList.remove('show'), 3500); }
+    function formatSchedule(value) { if (!value) return 'Belum ditentukan'; const date = new Date(value); return Number.isNaN(date) ? value : date.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' }); }
+    function wireInteractions() {
+      const toggle = $('#menuToggle'); const mobileNav = $('#mobileNav');
+      toggle.addEventListener('click', () => { const open = mobileNav.classList.toggle('open'); toggle.setAttribute('aria-expanded', open); });
+      $$('#mobileNav a').forEach(a => a.addEventListener('click', () => { mobileNav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }));
+      $('#backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      $('#pickupForm').addEventListener('submit', event => {
+        event.preventDefault(); const form = new FormData(event.currentTarget);
+        const name = form.get('name').trim(); const phone = form.get('phone').trim(); const service = form.get('service') || 'Belum dipilih'; const schedule = formatSchedule(form.get('schedule')); const address = form.get('address').trim(); const notes = form.get('notes').trim() || '-';
+        if (!name || !phone || !address) { showNotice('Lengkapi nama, nomor WhatsApp, dan alamat terlebih dahulu.'); return; }
+        const message = `Halo ${CONFIG.brandName}, saya ingin request pickup.\n\n*Nama:* ${name}\n*No. WhatsApp:* ${phone}\n*Layanan:* ${service}\n*Jadwal:* ${schedule}\n*Alamat:* ${address}\n*Catatan:* ${notes}\n\n(Mohon konfirmasi ketersediaan dan estimasi.)`;
+        window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+      });
+    }
+
+    setConfigValues(); renderServices(); renderPartners(); renderPaymentMethods(); renderPrices(); renderGallery(); renderTestimonials(); wireInteractions();
+  </script>
+</body>
+</html>
